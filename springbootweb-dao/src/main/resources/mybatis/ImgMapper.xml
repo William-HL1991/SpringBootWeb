@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springbootweb.dao.mapper.ImgMapper" >
+<!--  通用查询结果-->
+  <resultMap id="BaseResultMap" type="com.example.springbootweb.dao.module.Img" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="case_id" property="caseId" jdbcType="BIGINT" />
+    <result column="newcase_id" property="newcaseId" jdbcType="BIGINT" />
+  </resultMap>
+  <!-- 动态条件 -->
+  <sql id="QueryCondition">
+    <where>
+      <if test="id != null">
+        AND `id` = #{id}
+      </if>
+      <if test="name != null and name != ''">
+        AND `name` = #{name}
+      </if>
+      <if test="url != null and url != ''">
+        AND `name` = #{url}
+      </if>
+      <if test="case_id != null and case_id != ''">
+        AND `case_id` = #{caseId}
+      </if>
+      <if test="newcase_id != null and newcase_id != ''">
+        AND `newcase_id` = #{newCaseId}
+      </if>
+    </where>
+  </sql>
+
+  <sql id="Base_Column_List" >
+    id, name, url, case_id, newcase_id
+  </sql>
+
+  <insert id="insert" parameterType="com.example.springbootweb.dao.module.Img" >
+    insert into IMG (id, name, url,
+      case_id, newcase_id)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+      #{caseId,jdbcType=BIGINT}, #{newcaseId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springbootweb.dao.module.Img" >
+    insert into IMG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="caseId != null" >
+        case_id,
+      </if>
+      <if test="newcaseId != null" >
+        newcase_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="caseId != null" >
+        #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="newcaseId != null" >
+        #{newcaseId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.example.springbootweb.dao.param.ImgConditionBuilder">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM IMG
+    <include refid="QueryCondition"/>
+  </select>
+
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="com.example.springbootweb.dao.param.ImgConditionBuilder">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM IMG
+    WHERE `name` = #{name}
+  </select>
+</mapper>

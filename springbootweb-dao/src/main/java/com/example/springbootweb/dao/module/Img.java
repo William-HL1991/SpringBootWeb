@@ -1,0 +1,62 @@
+package com.example.springbootweb.dao.module;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Img {
+    private Long id;
+
+    private String name;
+
+    private String url;
+
+    private Long caseId;
+
+    private Long newcaseId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
+    }
+
+    public Long getCaseId() {
+        return caseId;
+    }
+
+    public void setCaseId(Long caseId) {
+        this.caseId = caseId;
+    }
+
+    public Long getNewcaseId() {
+        return newcaseId;
+    }
+
+    public void setNewcaseId(Long newcaseId) {
+        this.newcaseId = newcaseId;
+    }
+}
