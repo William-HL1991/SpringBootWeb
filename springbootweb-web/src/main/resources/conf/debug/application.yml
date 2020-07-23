@@ -1,17 +1,27 @@
 server:
+  address: 192.168.0.12
   port: 8080
+  tomcat:
+    basedir: /tmp/tomcat
+  session:
+    timeout: 300
 
 spring:
   datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/timemachine?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    master:
+      username: root
+      password: root
+      url: jdbc:mysql://localhost:3306/timemachine?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    slave:
+      username: root
+      password: 123456
+      url: jdbc:mysql://localhost:3306/timemachine?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+      driver-class-name: com.mysql.cj.jdbc.Driver
     redis: # redis配置
       host: localhost
       password: 123456
       port: 8379
-      timeout: 60s
       jedis:
         pool:
           max-active: 8
@@ -19,33 +29,19 @@ spring:
           min-idle: 1
   servlet:
     multipart:
-      max-file-size: 5MB      # 单个文件
-      max-request-size: 50MB   # 一次请求
+      max-file-size: 1MB      # 单个文件
+      max-request-size: 10MB   # 一次请求
   mvc:
     static-path-pattern: /image/**
   resources:
-    static-locations: file:/Users/{your.dir}/timeMachine/images
+    static-locations: file:/home/{your.dir}/springbootweb-images
 
 mybatis:
   mapper-locations: classpath*:mybatis/*.xml
   type-aliases-package: com.example.springbootweb.dao.module
 
-#showSql
 logging:
-  level:
-    com:
-      example:
-        springbootweb:
-          dao:
-            mapper : debug
-
-# 日志
-log:
-  charset: UTF-8
-  level: INFO
-  path: ./logs
-  file.max-size: 100MB
-  # pattern: %red([%d{'MM-dd HH:mm:ss,SSS',GMT+8:00}]) %green(%level) %highlight([%thread]) %boldMagenta(%logger{0}[%line]) - %cyan(%msg%n)
+  path: /home/{your.dir}/springbootweb/log
 
 # 接口文档
 springdoc:
@@ -56,7 +52,6 @@ springdoc:
     path: /swagger-ui.html
 
 # 文件
-tma.imagesPath: /Users/{your.dir}/timeMachine/images
-
+tma.imagesPath: /home/{your.dir}/springbootweb-images
 
 # https://www.toyaml.com/index.html

@@ -7,12 +7,14 @@ import com.example.springbootweb.common.utils.JsonUtil;
 import com.example.springbootweb.common.utils.StringUtil;
 import com.example.springbootweb.dao.module.Img;
 import com.example.springbootweb.web.entity.Upload;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,12 +30,11 @@ import static com.example.springbootweb.common.error.SpringBootWebErrors.IMG_IS_
  * @author william
  * @date 2020/4/21
  */
-@RestController
+@Controller
+@Slf4j
 @Async
 @CrossOrigin(allowCredentials = "true", maxAge = 3600)  // 解决跨域问题
 public class ImageUploaderController {
-
-    private static final Logger logger = LoggerFactory.getLogger(ImageUploaderController.class);
 
     @Autowired
     private ImgUploadService imgUploadService;
@@ -53,6 +54,7 @@ public class ImageUploaderController {
                                     @RequestParam(name = "name") String name,
                                     @RequestParam(name = "caseID", required = false) Integer caseId,
                                     @RequestParam(name = "newcaseID", required = false) Integer newCaseId) {
+        String fileUrl = "http://192.168.3.34:8080/image/";
         if (imgFile.isEmpty()) {
             return Result.wrapErrorResult(IMG_IS_NOT_EXIST);
         }
@@ -63,17 +65,16 @@ public class ImageUploaderController {
         if (imgFile.getContentType().contains("image")) {
             // 获取文件名
             String fileName = imgFile.getOriginalFilename();
-            logger.info("上传的文件名为：" + fileName);
+            log.info("上传的文件名为：" + fileName);
             // 获取文件的后缀名
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
-            logger.info("上传的后缀名为：" + suffixName);
+            log.info("上传的后缀名为：" + suffixName);
             String newFileName = StringUtil.getUuid() + suffixName;
             File dest = new File(imgUploadPath);
             // 检测是否存在目录
             if (!dest.getParentFile().exists()) {
                 dest.getParentFile().mkdirs();
             }
-            String fileUrl = "http://localhost:8080/image/" + newFileName;
             try {
                 FileCopyUtils.copy(imgFile.getInputStream(), Files.newOutputStream(new File(
                         imgUploadPath + File.separator + newFileName).toPath()));
@@ -87,22 +88,22 @@ public class ImageUploaderController {
                     Upload upload = new Upload();
                     upload.setName(name);
                     upload.setUrl(fileUrl);
-                    logger.info("\n" + JsonUtil.bean2StringPretty(upload));
+                    log.info("\n" + JsonUtil.bean2StringPretty(upload));
                     return Result.wrapSuccessfulResult("上传成功", upload);
                 } else {
                     return Result.wrapErrorResult(500005, "存库数据失败");
                 }
 
             } catch (IllegalStateException e) {
-                logger.error("save image IllegalStateException -> " + e.toString());
+                log.error("save image IllegalStateException -> " + e.toString());
                 e.printStackTrace();
                 return Result.wrapErrorResult(500001, "内部错误");
             } catch (IOException e) {
-                logger.error("save image IOException -> " + e.toString());
+                log.error("save image IOException -> " + e.toString());
                 e.printStackTrace();
                 return Result.wrapErrorResult(500002, "内部错误");
             } catch (Exception e) {
-                logger.error("save image Exception -> " + e.toString());
+                log.error("save image Exception -> " + e.toString());
                 e.printStackTrace();
                 return Result.wrapErrorResult(500003, "内部错误");
             }

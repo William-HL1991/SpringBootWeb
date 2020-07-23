@@ -10,7 +10,6 @@ import java.io.Serializable;
  */
 public class Result<T> implements Serializable {
 
-
     private T data;
 
     private boolean success;
@@ -25,42 +24,42 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> wrapSuccessfulResult(T data) {
         Result<T> result = new Result<T>();
-        result.data = data;
-        result.success = true;
         result.code = 0;
+        result.success = true;
         result.message = "请求成功";
+        result.data = data;
         return result;
     }
 
     public static <T> Result<T> wrapSuccessfulResult(String message, T data) {
         Result<T> result = new Result<T>();
-        result.data = data;
-        result.success = true;
         result.code = 0;
+        result.success = true;
         result.message = message;
+        result.data = data;
         return result;
     }
 
     public static <T> Result<T> wrapErrorResult(ServiceErrors error) {
         Result<T> result = new Result<T>();
-        result.success = false;
         result.code = error.getCode();
+        result.success = false;
         result.message = error.getMessage();
         return result;
     }
 
     public static <T> Result<T> wrapErrorResult(ServiceErrors error, Object... extendMsg) {
         Result<T> result = new Result<T>();
-        result.success = false;
         result.code = error.getCode();
+        result.success = false;
         result.message = String.format(error.getMessage(), extendMsg);
         return result;
     }
 
     public static <T> Result<T> wrapErrorResult(Integer code, String message) {
         Result<T> result = new Result<T>();
-        result.success = false;
         result.code = code;
+        result.success = false;
         result.message = message;
         return result;
     }
