@@ -27,7 +27,7 @@
     </parent>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>14.0.2</java.version>
         <springbootweb.version>0.0.1-SNAPSHOT</springbootweb.version>
     </properties>
 
@@ -63,7 +63,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.16.22</version>
+                <version>1.18.12</version>
             </dependency>
             <!--spring doc open api-->
             <dependency>

@@ -13,7 +13,7 @@ public enum SpringBootWebErrors implements ServiceErrors {
     CONDITION_IS_NOT_EXIST(404001, "查询条件不存在"),
     IMG_IS_NOT_EXIST(404002, "没有输入图片参数"),
     IMG_IS_EXIST(404003, "同名图片已存在"),
-    NOTLOGIN(404004, "尚未登录"),
+    NOT_LOGIN(404004, "尚未登录"),
     NOT_PERMISSION(404005, "没有对应的权限");
 
     private Integer code;

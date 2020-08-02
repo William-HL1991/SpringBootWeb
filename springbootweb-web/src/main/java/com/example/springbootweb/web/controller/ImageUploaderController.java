@@ -42,10 +42,10 @@ public class ImageUploaderController {
     @Autowired
     private ImgService imgService;
 
-    @Value("${tma.imagesPath}")
+    @Value("${sbwImagesPath}")
     private String imgUploadPath;
 
-    @PostMapping(value = "imgUpload",
+    @PostMapping(value = "/imgUpload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )

@@ -26,7 +26,8 @@ public class LoginController {
     @RequestMapping(value = "/notLogin", method = RequestMethod.GET)
     @ResponseBody
     public Result<Object> notLogin() {
-        return Result.wrapErrorResult(SpringBootWebErrors.NOTLOGIN);
+        log.debug("用户尚未登录");
+        return Result.wrapErrorResult(SpringBootWebErrors.NOT_LOGIN);
     }
 
     @RequestMapping(value = "/notRole", method = RequestMethod.GET)
@@ -61,6 +62,5 @@ public class LoginController {
             return Result.wrapSuccessfulResult("欢迎来到管理员页面");
         }
         return Result.wrapErrorResult(SpringBootWebErrors.NOT_PERMISSION);
-
     }
 }

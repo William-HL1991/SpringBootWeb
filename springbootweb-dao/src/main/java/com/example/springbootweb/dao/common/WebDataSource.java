@@ -4,6 +4,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -17,14 +19,14 @@ import java.util.Map;
 public class WebDataSource {
 
     // 主数据库
-    @Bean
+    @Bean("masterDataSource")
     @ConfigurationProperties("spring.datasource.master")
     public DataSource masterDataSource() {
         return DataSourceBuilder.create().build();
     }
 
     // 从数据库
-    @Bean
+    @Bean("slaveDataSource")
     @ConfigurationProperties("spring.datasource.slave")
     public DataSource slaveDataSource() {
         return DataSourceBuilder.create().build();
@@ -32,6 +34,8 @@ public class WebDataSource {
 
     // 数据路由
     @Bean
+    @Primary
+    @DependsOn({"masterDataSource", "slaveDataSource"})
     public DataSource dynamicDatasource() {
         Map<Object, Object> dataSourceMap = new HashMap<>();
         dataSourceMap.put(MultipleDataSourceHelper.MASTER, masterDataSource());

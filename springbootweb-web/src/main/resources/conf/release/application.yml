@@ -52,6 +52,6 @@ springdoc:
     path: /swagger-ui.html
 
 # 文件
-tma.imagesPath: /home/{your.dir}/springbootweb-images
+sbwImagesPath: /home/{your.dir}/springbootweb-images
 
 # https://www.toyaml.com/index.html

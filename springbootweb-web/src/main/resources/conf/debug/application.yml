@@ -1,6 +1,6 @@
 server:
-  address: 192.168.0.12
-  port: 8080
+  address: 127.0.0.1
+  port: 5050
   tomcat:
     basedir: /tmp/tomcat
   session:
@@ -34,14 +34,14 @@ spring:
   mvc:
     static-path-pattern: /image/**
   resources:
-    static-locations: file:/home/{your.dir}/springbootweb-images
+    static-locations: file:/Users/william/springbootweb-images
 
 mybatis:
   mapper-locations: classpath*:mybatis/*.xml
   type-aliases-package: com.example.springbootweb.dao.module
 
 logging:
-  path: /home/{your.dir}/springbootweb/log
+  path: /Users/william/springbootweb/log
 
 # 接口文档
 springdoc:
@@ -52,6 +52,8 @@ springdoc:
     path: /swagger-ui.html
 
 # 文件
-tma.imagesPath: /home/{your.dir}/springbootweb-images
-
+sbwImagesPath: /Users/william/springbootweb-images
 # https://www.toyaml.com/index.html
+#
+#
+#primary: true
