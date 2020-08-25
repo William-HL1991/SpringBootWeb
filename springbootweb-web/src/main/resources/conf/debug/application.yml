@@ -34,14 +34,14 @@ spring:
   mvc:
     static-path-pattern: /image/**
   resources:
-    static-locations: file:/Users/william/springbootweb-images
+    static-locations: file:/Users/william/SpringBoot/springbootweb-images
 
 mybatis:
   mapper-locations: classpath*:mybatis/*.xml
   type-aliases-package: com.example.springbootweb.dao.module
 
 logging:
-  path: /Users/william/springbootweb/log
+  path: /Users/william/SpringBoot/log
 
 # 接口文档
 springdoc:
@@ -52,7 +52,7 @@ springdoc:
     path: /swagger-ui.html
 
 # 文件
-sbwImagesPath: /Users/william/springbootweb-images
+sbwImagesPath: /Users/william/SpringBoot/springbootweb-images
 # https://www.toyaml.com/index.html
 #
 #

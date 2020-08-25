@@ -5,6 +5,18 @@
     <packaging>pom</packaging>
     <name>springbootweb</name>
     <description>Demo project for Spring Boot</description>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>13</source>
+                    <target>13</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <!--项目信息&ndash;&gt;-->
     <groupId>com.example.springbootweb</groupId>

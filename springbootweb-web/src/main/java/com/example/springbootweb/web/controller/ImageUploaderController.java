@@ -3,13 +3,12 @@ package com.example.springbootweb.web.controller;
 import com.example.springbootweb.biz.service.ImgService;
 import com.example.springbootweb.biz.service.ImgUploadService;
 import com.example.springbootweb.common.entity.Result;
+import com.example.springbootweb.common.utils.IpUtil;
 import com.example.springbootweb.common.utils.JsonUtil;
 import com.example.springbootweb.common.utils.StringUtil;
 import com.example.springbootweb.dao.module.Img;
 import com.example.springbootweb.web.entity.Upload;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -45,6 +44,9 @@ public class ImageUploaderController {
     @Value("${sbwImagesPath}")
     private String imgUploadPath;
 
+    @Value("$server.port")
+    private String port;
+
     @PostMapping(value = "/imgUpload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -54,7 +56,7 @@ public class ImageUploaderController {
                                     @RequestParam(name = "name") String name,
                                     @RequestParam(name = "caseID", required = false) Integer caseId,
                                     @RequestParam(name = "newcaseID", required = false) Integer newCaseId) {
-        String fileUrl = "http://192.168.3.34:8080/image/";
+        String fileUrl = "http://" + IpUtil.getHostIP() + ":" + port + "/image/";
         if (imgFile.isEmpty()) {
             return Result.wrapErrorResult(IMG_IS_NOT_EXIST);
         }

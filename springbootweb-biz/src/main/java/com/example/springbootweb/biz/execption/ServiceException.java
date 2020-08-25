@@ -1,25 +1,36 @@
 package com.example.springbootweb.biz.execption;
 
-import com.example.springbootweb.common.error.ServiceErrors;
+import com.example.springbootweb.common.error.SpringBootWebErrors;
 
-/**
- * @author william
- * @date 2020/4/21
- */
-public class ServiceException extends RuntimeException {
-    private final Integer code;
+public class ServiceException extends BusinessException {
+    private SpringBootWebErrors errors;
+    private Object data;
 
-    public ServiceException(ServiceErrors errors) {
-        super(errors.getMessage());
-        this.code = errors.getCode();
+    public ServiceException(SpringBootWebErrors errors) {
+        super(errors);
+        this.errors = errors;
     }
 
-    public ServiceException(Integer code, String message) {
-        super(message);
-        this.code = code;
+    public ServiceException(SpringBootWebErrors errors, Object data) {
+        super(errors);
+        this.errors = errors;
+        this.data = data;
     }
 
-    public Integer getCode() {
-        return this.code;
+
+    public ServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public ServiceException(Throwable cause) {
+        super(cause);
+    }
+
+    public SpringBootWebErrors getError() {
+        return errors;
+    }
+
+    public Object getData() {
+        return data;
     }
 }

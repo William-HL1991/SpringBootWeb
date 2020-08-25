@@ -1,7 +1,7 @@
 package com.example.springbootweb.biz.impl;
 
+import com.example.springbootweb.biz.execption.BusinessException;
 import com.example.springbootweb.biz.service.ImgService;
-import com.example.springbootweb.biz.execption.ServiceException;
 import com.example.springbootweb.common.error.SpringBootWebErrors;
 import com.example.springbootweb.common.redis.CacheTime;
 import com.example.springbootweb.common.redis.RedisClient;
@@ -32,7 +32,7 @@ public class ImgServiceImpl implements ImgService {
     public Img findByName(String name) {
         Img img = imgMapper.selectByName(name);
         if (Objects.isNull(img)) {
-            throw new ServiceException(SpringBootWebErrors.CONDITION_IS_NOT_EXIST);
+            throw new BusinessException(SpringBootWebErrors.CONDITION_IS_NOT_EXIST);
         }
         redisClient.set("name:" + name, img, CacheTime.CACHE_EXP_FIVE_MINUTES);
         return img;

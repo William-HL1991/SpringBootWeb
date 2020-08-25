@@ -7,8 +7,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
@@ -18,8 +17,8 @@ import java.text.SimpleDateFormat;
  * @author william
  * @date 2020/4/21
  */
+@Slf4j
 public class JsonUtil {
-    private static final Logger logger = LoggerFactory.getLogger(JsonUtil.class.getName());
     private static ObjectMapper objectMapper = new ObjectMapper();
     // dateformat
     private static final String STANDARDFORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -49,7 +48,7 @@ public class JsonUtil {
         try {
             return obj instanceof String ? (String) obj : objectMapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            logger.warn("Parse String to Object error : {}", e.toString());
+            log.warn("Parse String to Object error : {}", e.toString());
             return null;
         }
     }
@@ -67,7 +66,7 @@ public class JsonUtil {
             return obj instanceof String ? (String) obj :
                     objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            logger.warn("Parse String to Object error : {}", e.toString());
+            log.warn("Parse String to Object error : {}", e.toString());
             return null;
         }
     }
@@ -85,7 +84,7 @@ public class JsonUtil {
         try {
             return clazz.equals(String.class) ? (T) str : objectMapper.readValue(str, clazz);
         } catch (Exception e) {
-            logger.warn("Parse String to Object error : {}", e.toString());
+            log.warn("Parse String to Object error : {}", e.toString());
             return null;
         }
     }
@@ -104,7 +103,7 @@ public class JsonUtil {
             return (T) (typeReference.getType().equals(String.class) ?
                     str : objectMapper.readValue(str, typeReference));
         } catch (IOException e) {
-            logger.warn("Parse String to Object error", e);
+            log.warn("Parse String to Object error", e);
             return null;
         }
     }
@@ -121,7 +120,7 @@ public class JsonUtil {
         try {
             return objectMapper.readValue(str, javaType);
         } catch (IOException e) {
-            logger.warn("Parse String to Object error : {}" + e.toString());
+            log.warn("Parse String to Object error : {}" + e.toString());
             return null;
         }
     }
